@@ -1,4 +1,4 @@
-exports.createDeployment = function(workerCount) {
+exports.create = function(workerCount) {
     var deployment = createDeployment({
 	adminACL: ["local"],
     });
