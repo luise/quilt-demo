@@ -1,4 +1,4 @@
-var defaultImage = "quilt/spark";
+var defaultImage = "quilt/spark:1.5.2";
 
 module.exports = function (sparkWorkers, image) {
     if (typeof image !== 'string') {
