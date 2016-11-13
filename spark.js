@@ -5,10 +5,9 @@ exports.New = function (inf, sparkWorkers, image) {
         image = defaultImage
     }
     var master = new Service("sprk-ms", [new Container(image, ["run", "master"])]);
-    var workers = new Service("sprk-wk",
-                              new Container(image, ["run", "worker"])
-                                  .withEnv({"MASTERS": master.hostname()})
-                                  .replicate(sparkWorkers));
+    var workers = new Service("sprk-wk", new Container(image, ["run", "worker"])
+                                             .withEnv({"MASTERS": master.hostname()})
+                                             .replicate(sparkWorkers));
     workers.connect(7077, workers);
     workers.connect(7077, master);
 
