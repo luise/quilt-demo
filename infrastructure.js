@@ -1,4 +1,4 @@
-exports.createDeployment = function() {
+exports.createDeployment = function(workerCount) {
     var deployment = createDeployment({
 	adminACL: ["local"],
     });
@@ -14,6 +14,6 @@ exports.createDeployment = function() {
 
     // Boot VMs with the properties of `baseMachine`.
     deployment.deploy(baseMachine.asMaster());
-    deployment.deploy(baseMachine.asWorker().replicate(3));
+    deployment.deploy(baseMachine.asWorker().replicate(workerCount));
     return deployment
 }
