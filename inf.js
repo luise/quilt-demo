@@ -1,5 +1,5 @@
 exports.New = function(count) {
-    var infrastructure = createDeployment({
+    var inf = createDeployment({
         adminACL: ["local"],
     });
 
@@ -9,7 +9,7 @@ exports.New = function(count) {
         sshKeys: githubKeys("ejj"),
     });
 
-    infrastructure.deploy(baseMachine.asMaster());
-    infrastructure.deploy(baseMachine.asWorker().replicate(count));
-    return infrastructure
+    inf.deploy(baseMachine.asMaster());
+    inf.deploy(baseMachine.asWorker().replicate(count));
+    return inf
 }
