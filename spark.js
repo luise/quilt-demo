@@ -1,17 +1,13 @@
-var defaultImage = "quilt/spark:1.5.2";
+var defaultImage = "quilt/spark";
 
 module.exports = function (sparkWorkers, image) {
     if (typeof image !== 'string') {
         image = defaultImage
     }
-
-    this.master = new Service("spark-master",
-        [new Container(image, ["run", "master"])]);
-
-    this.workers = new Service("spark-worker",
-        new Container(image, ["run", "worker"])
-            .withEnv({"MASTERS": this.master.hostname()})
-            .replicate(sparkWorkers));
+    this.master = new Service("spark-ms", [new Container(image, ["run", "master"])]);
+    this.workers = new Service("spark-wk", new Container(image, ["run", "worker"])
+                                              .withEnv({"MASTERS": this.master.hostname()})
+                                              .replicate(sparkWorkers));
 
     this.workers.connect(7077, this.workers);
     this.workers.connect(7077, this.master);
