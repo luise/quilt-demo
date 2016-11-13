@@ -1,7 +1,6 @@
 var defaultImage = "quilt/spark";
 
-function Spark(nWorker, image) {
-
+exports.Spark = function (nWorker, image) {
     var masterContainers = [new Container(image, ["run", "master"])]
     this.masters = new Service("spark-ms", masterContainers)
 
@@ -17,7 +16,4 @@ function Spark(nWorker, image) {
         deployment.deploy(this.masters);
         deployment.deploy(this.workers);
     }
-}
-
-exports.setImage = setImage;
-exports.Spark = Spark;
+};
