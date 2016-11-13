@@ -1,19 +1,19 @@
 var defaultImage = "quilt/spark";
 
-module.exports = function (nWorker, image) {
-    var masterContainers = [new Container(image, ["run", "master"])];
-    this.masters = new Service("spark-ms", masterContainers);
+module.exports = function (sparkWorkers, image) {
+    this.master = new Service("spark-master",
+        [new Container(image, ["run", "master"])]);
 
-    var workerContainers = new Container(image, ["run", "worker"])
-        .withEnv({"MASTERS": this.masters.children().join(",")})
-        .replicate(nWorker);
-    this.workers = new Service("spark-wk", workerContainers);
+    this.workers = new Service("spark-worker",
+        new Container(image, ["run", "worker"])
+            .withEnv({"MASTERS": this.master.hostname()})
+            .replicate(sparkWorkers));
 
     this.workers.connect(7077, this.workers);
-    this.workers.connect(7077, this.masters);
+    this.workers.connect(7077, this.master);
 
     this.deploy = function(deployment) {
-        deployment.deploy(this.masters);
+        deployment.deploy(this.master);
         deployment.deploy(this.workers);
     }
 };
