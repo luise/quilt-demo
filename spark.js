@@ -1,6 +1,10 @@
 var defaultImage = "quilt/spark";
 
 module.exports = function (sparkWorkers, image) {
+    if (typeof image !== 'string') {
+        image = defaultImage
+    }
+
     this.master = new Service("spark-master",
         [new Container(image, ["run", "master"])]);
 
