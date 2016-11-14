@@ -5,7 +5,7 @@ exports.New = function(count) {
 
     var baseMachine = new Machine({
         provider: "Amazon",
-        size: "m4.large",
+        size: "m4.xlarge",
         sshKeys: githubKeys("ejj"),
     });
 
