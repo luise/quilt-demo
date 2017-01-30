@@ -5,7 +5,7 @@ exports.New = function() {
         count = defaultCount
     }
 
-    var inf = createDeployment();
+    var inf = createDeployment({});
 
     var machine = new Machine({
         provider: "Amazon",
