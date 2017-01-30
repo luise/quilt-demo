@@ -1,15 +1,19 @@
-exports.New = function(count) {
-    var inf = createDeployment({
-        adminACL: ["local"],
-    });
+var defaultCount = 4;
 
-    var baseMachine = new Machine({
+exports.New = function() {
+    if (typeof count !== 'number') {
+        count = defaultCount
+    }
+
+    var inf = createDeployment();
+
+    var machine = new Machine({
         provider: "Amazon",
         size: "m4.xlarge",
         sshKeys: githubKeys("ejj"),
     });
 
-    inf.deploy(baseMachine.asMaster());
-    inf.deploy(baseMachine.asWorker().replicate(count));
+    inf.deploy(machine.asMaster());
+    inf.deploy(machine.asWorker().replicate(count));
     return inf
 }
