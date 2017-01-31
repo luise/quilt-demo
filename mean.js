@@ -1,7 +1,7 @@
 var HaProxy = require("github.com/NetSys/quilt/specs/haproxy/haproxy").Haproxy;
 var Mongo = require("github.com/NetSys/quilt/specs/mongo/mongo");
 var Node = require("github.com/NetSys/quilt/specs/node/node");
-var Inf = Inf.New(4);
+var Inf = require("github.com/ejj/quilt-demo/inf");
 
 var mongo = new Mongo(3);
 var app = new Node({
@@ -18,6 +18,7 @@ mongo.connect(mongo.port(), app);
 app.connect(mongo.port(), mongo);
 haproxy.public();
 
-Inf.deploy(app);
-Inf.deploy(mongo);
-Inf.deploy(haproxy);
+var inf = Inf.New(4);
+inf.deploy(app);
+inf.deploy(mongo);
+inf.deploy(haproxy);
