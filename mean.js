@@ -3,16 +3,17 @@ var Mongo = require("github.com/NetSys/quilt/specs/mongo/mongo");
 var Node = require("github.com/NetSys/quilt/specs/node/node");
 var Inf = require("github.com/ejj/quilt-demo/inf");
 
-var mongo = new Mongo(3);
+var count = 4;
+var mongo = new Mongo(count);
 var app = new Node({
-  nWorker: 3,
+  nWorker: count,
   image: "quilt/mean-service",
   env: {
     PORT: "80",
     MONGO_URI: mongo.uri("mean-example")
   }
 });
-var haproxy = new HaProxy(3, app.services());
+var haproxy = new HaProxy(count, app.services());
 
 mongo.connect(mongo.port(), app);
 app.connect(mongo.port(), mongo);
