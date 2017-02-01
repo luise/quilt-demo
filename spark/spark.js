@@ -12,6 +12,7 @@ exports.New = function (inf, sparkWorkers, image) {
 
   workers.connect(7077, workers);
   workers.connect(7077, master);
+  publicInternet.connect(8080, master)
 
   inf.deploy(master);
   inf.deploy(workers);
