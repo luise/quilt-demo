@@ -10,7 +10,7 @@ var count = 4;
 var mongo = new Mongo(count);
 var app = new Node({
     nWorker: count,
-    repo: "https://github.com/tejasmanohar/node-todo.git",
+    repo: "https://github.com/quilt/node-todo.git",
     env: {
         PORT: "80",
         MONGO_URI: mongo.uri("mean-example")
