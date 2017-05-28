@@ -1,17 +1,20 @@
-var HaProxy = require("github.com/NetSys/quilt/specs/haproxy/haproxy").Haproxy;
-var Mongo = require("github.com/NetSys/quilt/specs/mongo/mongo");
-var Node = require("github.com/NetSys/quilt/specs/node/node");
-var Inf = require("github.com/ejj/quilt-demo/inf");
+"use strict";
+
+const {Range, githubKeys, LabelRule} = require("@quilt/quilt");
+var HaProxy = require("@quilt/haproxy").Haproxy;
+var Mongo = require("@quilt/mongo");
+var Node = require("@quilt/nodejs");
+var Inf = require("./inf.js");
 
 var count = 4;
 var mongo = new Mongo(count);
 var app = new Node({
-  nWorker: count,
-  image: "quilt/mean-service",
-  env: {
-    PORT: "80",
-    MONGO_URI: mongo.uri("mean-example")
-  }
+    nWorker: count,
+    repo: "https://github.com/tejasmanohar/node-todo.git",
+    env: {
+        PORT: "80",
+        MONGO_URI: mongo.uri("mean-example")
+    }
 });
 var haproxy = new HaProxy(count, app.services());
 
