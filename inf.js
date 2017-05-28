@@ -5,8 +5,8 @@ exports.New = function(count) {
 
     var machine = new quilt.Machine({
         provider: "Amazon",
-        cpus: new quilt.Range(4, 8),
-        ram: new quilt.Range(16, 64),
+        cpus: new quilt.Range(2, 8),
+        ram: new quilt.Range(4, 64),
         sshKeys: quilt.githubKeys("ejj"),
     });
 
