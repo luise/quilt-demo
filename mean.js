@@ -1,6 +1,6 @@
 "use strict";
 
-const {Range, githubKeys, LabelRule} = require("@quilt/quilt");
+var quilt = require("@quilt/quilt");
 var HaProxy = require("@quilt/haproxy").Haproxy;
 var Mongo = require("@quilt/mongo");
 var Node = require("@quilt/nodejs");
@@ -18,8 +18,8 @@ var app = new Node({
 });
 var haproxy = new HaProxy(count, app.services());
 
-mongo.connect(mongo.port(), app);
-app.connect(mongo.port(), mongo);
+mongo.connect(mongo.port, app);
+app.connect(mongo.port, mongo);
 haproxy.public();
 
 var inf = Inf.New(4);

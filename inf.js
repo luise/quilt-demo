@@ -1,16 +1,12 @@
-var defaultCount = 4;
+var quilt = require("@quilt/quilt");
 
-exports.New = function() {
-    if (typeof count !== 'number') {
-        count = defaultCount
-    }
+exports.New = function(count) {
+    var inf = quilt.createDeployment({});
 
-    var inf = createDeployment({});
-
-    var machine = new Machine({
+    var machine = new quilt.Machine({
         provider: "Amazon",
         size: "m4.xlarge",
-        sshKeys: githubKeys("ejj"),
+        sshKeys: quilt.githubKeys("ejj"),
     });
 
     inf.deploy(machine.asMaster());
