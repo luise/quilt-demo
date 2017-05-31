@@ -1,6 +1,5 @@
 "use strict";
 
-var quilt = require("@quilt/quilt");
 var HaProxy = require("@quilt/haproxy").Haproxy;
 var Mongo = require("@quilt/mongo");
 var Node = require("@quilt/nodejs");
