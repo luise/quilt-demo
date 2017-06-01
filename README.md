@@ -24,7 +24,12 @@ and the Node.js application).
 
 If you would like to run this demo, you'll need to clone the repository
 and make a few changes to the code (we're working on streamlining this
-configuration process!).  First, you'll need to install Node.js, which
+configuration process!).
+
+### Installing and Configuring Quilt
+
+If you've never used Quilt before, you'll need to install and configure
+Quilt.  First, you'll need to install Node.js, which
 Quilt relies on to run JavaScript blueprints.  The process for installing
 Node.js is well documented on the
 [Node.js website](https://nodejs.org/en/download/). One easy way to install
@@ -40,20 +45,40 @@ Next, you'll need to install Quilt using Node's package manager:
 $ npm install -g quilt/install
 ```
 
+To allow Quilt to launch Amazon EC2 instances, you need to use configure AWS.
+The easiest way to do this is by setting environment variables:
+
+```console
+$ export AWS_ACCESS_KEY_ID=<your access key id>
+$ export AWS_SECRET_ACCESS_KEY=<your secret access key>
+```
+
+You can also use any of the mechanisms allowed by the AWS CLI, which
+are described in more detail in
+[Amazon's documentation](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).
+
 At this point, Quilt is installed, and you can use it to write your own
-blueprint! To run the demo blueprint, you'll also need to download and
+blueprint.
+
+### Installing and running the demo
+
+To run the demo blueprint, you'll also need to download and
 install the demo code:
 
 ```console
 $ git clone https://github.com/quilt/demos.git
+$ cd demos
 $ npm install
 ```
 
-As-is, this will launch infrastructure that's only accessible via Github user
-ejj's SSH keys. To make sure that you can log into the machines, change line
+As-is, the JavaScript files in the demos repository  will launch infrastructure
+that's only accessible via Github user e/jj's SSH keys. To make sure that you
+can log into the machines, change line
 10 of `inf.js` to have your github username instead of `ejj`, which will mean
 that once the machines are launched, you can login to them using your Github SSH
-key(s).
+key(s). If you don't have a GitHub ssh key,
+[the Github documentation](https://help.github.com/articles/connecting-to-github-with-ssh/)
+describes how to add one to your account.
 
 Now you're ready to launch the demo! Quilt relies on a long-running
 daemon (similar to the Docker daemon, for folks familiar with Docker) to keep
@@ -69,6 +94,7 @@ Now, in a new terminal window, run the blueprint:
 $ quilt run ./mean.js
 ```
 
+`quilt run` will return immediately because it delegates to the Quilt daemon.
 If you return to the terminal window running the Quilt daemon, you'll see that
 Quilt is making some progress towards getting the demo Node.js application up
 and running.  It will take Quilt a few minutes to launch VMs on EC2 and then
