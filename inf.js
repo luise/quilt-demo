@@ -1,16 +1,16 @@
-var quilt = require("@quilt/quilt");
+const quilt = require('@quilt/quilt');
 
-exports.New = function(count) {
-    var inf = quilt.createDeployment({});
+exports.createInfrastructure = function(count) {
+  const inf = quilt.createDeployment();
 
-    var machine = new quilt.Machine({
-        provider: "Amazon",
-        cpus: new quilt.Range(2, 8),
-        ram: new quilt.Range(4, 64),
-        sshKeys: quilt.githubKeys("ejj"),
-    });
+  const machine = new quilt.Machine({
+    provider: 'Amazon',
+    cpus: new quilt.Range(2, 8),
+    ram: new quilt.Range(4, 64),
+    sshKeys: quilt.githubKeys('ejj'),
+  });
 
-    inf.deploy(machine.asMaster());
-    inf.deploy(machine.asWorker().replicate(count));
-    return inf
-}
+  inf.deploy(machine.asMaster());
+  inf.deploy(machine.asWorker().replicate(count));
+  return inf;
+};
