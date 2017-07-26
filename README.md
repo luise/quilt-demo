@@ -40,7 +40,7 @@ $ brew install node
 Next, you'll need to install Quilt using Node's package manager:
 
 ```console
-$ npm install -g quilt/install
+$ npm install -g @quilt/install
 ```
 
 To allow Quilt to launch Amazon EC2 instances, you need to use configure AWS.
