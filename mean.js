@@ -1,6 +1,6 @@
 'use strict';
 
-const HaProxy = require('@quilt/haproxy').Haproxy;
+const HaProxy = require('@quilt/haproxy');
 const Mongo = require('@quilt/mongo');
 const Node = require('@quilt/nodejs');
 const Inf = require('./inf.js');
