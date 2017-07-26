@@ -1,5 +1,8 @@
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
+
 exports.addSshKey = function(machine) {
   // Try to get a SSH public key to use by looking for one in ~/.ssh/id_rsa.pub.
   const publicKeyFile = path.join(process.env.HOME, '.ssh/id_rsa.pub');
