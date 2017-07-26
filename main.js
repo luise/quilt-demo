@@ -9,8 +9,8 @@ const infrastructure = quilt.createDeployment();
 
 const machine = new quilt.Machine({
   provider: 'Amazon',
-  cpus: new quilt.Range(2, 8),
-  ram: new quilt.Range(4, 64),
+  cpu: 4,
+  ram: 8,
 });
 
 utils.addSshKey(machine);
