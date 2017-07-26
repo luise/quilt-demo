@@ -3,28 +3,26 @@
 This repository contains the blueprint needed to run the Quilt MEAN stack
 demo.  We've broken the blueprint into two different files:
 
-- `inf.js`: This file defines a single function that returns an infrastructure
-descrption.  In this case, the infrastructure is a set of Amazon EC2 instances,
-and the function's single parameter describes the number of worker instances
-to launch.  Workers are instances that can be used to run containers;
-the infrastructure also includes a master instance that manages the Quilt
-deployment.  While this particular file describes virtual machines on Amazon
-EC2, an infrastructure can describe physical or virtual machines
-on any cloud provider (Quilt currently supports GCE, AWS, Digital Ocean,
-and Vagrant is coming soon).
-- `mean.js`: This file uses `inf.js` to launch a set of instances, and deploys
-a MEAN stack on those instances.  `mean.js` builds on other, existing Quilt
+- `todo_app.js`: This file exports a constructor `TodoApp` that creates a
+deployable object that represents a MEAN stack application.  Deploying a
+`TodoApp` instance deploys a repliated Node.js application, an HAProxy
+service to load balance over the Node.js application, and a replicated
+MongoDB service to use to store the application's data.
+`todo_app.js` builds on other, existing Quilt
 blueprints, including a blueprint describing how to run MongoDB, a blueprint
 for Node.js, and a blueprint for HAProxy. Because those existing blueprints
 describe how to run those respective services, all `mean.js` needs to do is to
 hook the services together (e.g., by opening a connection between MongoDB
 and the Node.js application).
+- `main.js`: This file initializes a set of Amazon EC2 instances, and then
+uses the TodoApp constructor to deploy the example Node.js application (a
+TODO app) on those instances.
+While this particular file describes virtual machines on Amazon
+EC2, an infrastructure can describe physical or virtual machines
+on any cloud provider (Quilt currently supports GCE, AWS, Digital Ocean,
+and Vagrant is experimental).
 
 ## Running the demo code
-
-If you would like to run this demo, you'll need to clone the repository
-and make a few changes to the code (we're working on streamlining this
-configuration process!).
 
 ### Installing and Configuring Quilt
 
@@ -58,7 +56,8 @@ are described in more detail in
 [Amazon's documentation](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).
 
 At this point, Quilt is installed, and you can use it to write your own
-blueprint.
+blueprint. For more information about getting started with Quilt, check out
+the [Getting Started Guide](http://docs.quilt.io/#getting-started).
 
 ### Installing and running the demo
 
@@ -70,15 +69,6 @@ $ git clone https://github.com/quilt/demos.git
 $ cd demos
 $ npm install
 ```
-
-As-is, the JavaScript files in the demos repository  will launch infrastructure
-that's only accessible via Github user e/jj's SSH keys. To make sure that you
-can log into the machines, change line
-10 of `inf.js` to have your github username instead of `ejj`, which will mean
-that once the machines are launched, you can login to them using your Github SSH
-key(s). If you don't have a GitHub ssh key,
-[the Github documentation](https://help.github.com/articles/connecting-to-github-with-ssh/)
-describes how to add one to your account.
 
 Now you're ready to launch the demo! Quilt relies on a long-running
 daemon (similar to the Docker daemon, for folks familiar with Docker) to keep
@@ -124,9 +114,9 @@ process.
 ## Next steps
 
 If you're interested in using Quilt to launch other applications, check out our
-[Getting Started Guide](https://github.com/quilt/quilt/blob/master/docs/GettingStarted.md).
+[Getting Started Guide](http://docs.quilt.io/#getting-started).
 If you're interested in writing your own blueprints, take a look at our
-[Blueprint Writer's Guide](https://github.com/quilt/quilt/blob/master/docs/spec-writers-guide.md).
+[Blueprint Writer's Guide](http://docs.quilt.io/#blueprint-writers-guide).
 
 ## Feedback
 
