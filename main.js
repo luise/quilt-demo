@@ -1,5 +1,6 @@
 const quilt = require('@quilt/quilt');
 const TodoApp = require('./todo_app.js');
+const utils = require('./utils.js');
 
 // Replication to use for the node application
 // and Mongo.
@@ -10,8 +11,9 @@ const machine = new quilt.Machine({
   provider: 'Amazon',
   cpus: new quilt.Range(2, 8),
   ram: new quilt.Range(4, 64),
-  sshKeys: quilt.githubKeys('ejj'),
 });
+
+utils.addSshKey(machine);
 
 infrastructure.deploy(machine.asMaster());
 infrastructure.deploy(machine.asWorker().replicate(count));
