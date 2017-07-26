@@ -4,6 +4,7 @@ const HaProxy = require('@quilt/haproxy');
 const Mongo = require('@quilt/mongo');
 const Node = require('@quilt/nodejs');
 const Inf = require('./inf.js');
+const {publicInternet} = require('@quilt/quilt');
 
 const count = 4;
 const mongo = new Mongo(count);
@@ -17,9 +18,8 @@ const app = new Node({
 });
 const haproxy = new HaProxy(count, app.services());
 
-mongo.connect(mongo.port, app);
 app.connect(mongo.port, mongo);
-haproxy.public();
+haproxy.service.allowFrom(publicInternet, 80);
 
 const inf = Inf.createInfrastructure(4);
 inf.deploy(app);
